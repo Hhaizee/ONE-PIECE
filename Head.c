@@ -7,8 +7,8 @@
 
 typedef struct SList
 {
-	char name[LENGTH];
-	int count;
+     char name[LENGTH];
+     int count;
     struct SList* next;
 }Node, * node;
 
@@ -17,6 +17,9 @@ void Insert(node& L, const char(&usersname)[30], int i);//插入
 void Traverse(node L);//遍历
 void Delete(node& L, int i);//删除
 void Destory(node& L);//销毁
+void BubbleSort(node& L, int n);//冒泡
+void QuickSort(node L, node s);//快速
+
 
 int main()
 {
@@ -124,6 +127,57 @@ void Destory(node &L)
 	Traverse(L);
 	free(L);
 }
+
+void BubbleSort(node &L, int n)
+{
+	node p, q;
+	int temp, i;
+
+	for (p = L, i = 1; i < n; i++, p = p->next)
+	{
+	  for (q = p->next; q != NULL; q = q->next)
+	   {
+	       if (p->count < q->count)
+		{
+			temp = p->count;
+			p->count = q->count;
+			q->count = temp;
+		}
+	   }
+	}
+}
+
+void QuickSort(node L, node s)
+{
+	if (L->next != s && L->next->next != s)
+	{
+		node key = L->next;
+		node LP = L;
+		node RP = key;
+		node P = key->next;
+
+		while (P != s)
+		{
+			if (P->count < key->count)
+			{
+			  LP = LP->next = P;
+			}
+			else
+			{
+			  RP = RP->next = P;
+			}
+			P = P->next;
+		}
+
+		LP->next = key;
+		RP->next = s;
+
+		QuickSort(L, key);
+		QuickSort(key, s);
+	}
+}
+
+
 
 
 
